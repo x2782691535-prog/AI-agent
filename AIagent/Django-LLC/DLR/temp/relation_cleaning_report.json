@@ -1,0 +1,88 @@
+{
+  "processing_summary": {
+    "start_time": "2025-09-20T17:44:47.118295",
+    "end_time": "2025-09-20T17:44:47.120376",
+    "processing_time_seconds": 0.002081,
+    "data_quality_score": 58.33,
+    "total_data_points": 12,
+    "valid_data_points": 7
+  },
+  "entity_summary": {
+    "total_rows": 0,
+    "valid_entities": 0,
+    "data_issues": {
+      "empty_entities": 0,
+      "duplicate_entities": 0,
+      "empty_types": 0
+    },
+    "type_distribution": {}
+  },
+  "relation_summary": {
+    "total_rows": 12,
+    "valid_relations": 7,
+    "data_issues": {
+      "empty_source": 2,
+      "empty_target": 0,
+      "empty_relation_type": 1,
+      "duplicate_relations": 2
+    },
+    "relation_type_distribution": {
+      "工作于": 1,
+      "学习于": 1,
+      "研究于": 1,
+      "毕业于": 1,
+      "位于": 2,
+      "隶属于": 1
+    }
+  },
+  "text_summary": {
+    "original_length": 0,
+    "cleaned_length": 0,
+    "compression_ratio": 100.0,
+    "sentence_count": 0,
+    "token_count": 0
+  },
+  "detailed_statistics": {
+    "entity_cleaning_details": [],
+    "relation_cleaning_details": [],
+    "text_cleaning_details": [],
+    "skipped_entity_rows": [],
+    "skipped_relation_rows": [
+      {
+        "row": 3,
+        "reason": "源实体为空",
+        "original_value": "NaN",
+        "column": "源实体"
+      },
+      {
+        "row": 4,
+        "reason": "关系类型为空",
+        "original_value": "NaN",
+        "column": "关系"
+      },
+      {
+        "row": 5,
+        "reason": "重复关系",
+        "original_value": "张三 -> 工作于 -> 北京大学",
+        "column": "triplet"
+      },
+      {
+        "row": 6,
+        "reason": "重复关系",
+        "original_value": "李四 -> 学习于 -> 清华大学",
+        "column": "triplet"
+      },
+      {
+        "row": 11,
+        "reason": "源实体为空",
+        "original_value": "NaN",
+        "column": "源实体"
+      }
+    ],
+    "duplicate_entity_names": [],
+    "duplicate_relation_triplets": [
+      "张三 -> 工作于 -> 北京大学",
+      "李四 -> 学习于 -> 清华大学"
+    ]
+  }
+}

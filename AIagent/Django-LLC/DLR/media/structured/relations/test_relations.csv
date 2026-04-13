@@ -1,0 +1,10 @@
+源实体,关系类型,目标实体,证据文本
+张三,WORKS_FOR,阿里巴巴,张三在阿里巴巴工作
+李四,WORKS_FOR,腾讯,李四在腾讯工作
+阿里巴巴,LOCATED_IN,北京,阿里巴巴总部位于北京
+腾讯,LOCATED_IN,深圳,腾讯总部位于深圳
+张三,LIVES_IN,上海,张三居住在上海
+人工智能,INCLUDES,机器学习,人工智能包含机器学习
+机器学习,INCLUDES,深度学习,机器学习包含深度学习
+张三,USES,Python,张三使用Python编程
+李四,USES,Python,李四使用Python编程

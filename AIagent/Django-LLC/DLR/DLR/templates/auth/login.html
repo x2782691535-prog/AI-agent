@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - AI 智能助手</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .auth-container {
+                @apply min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4;
+            }
+            .auth-card {
+                @apply bg-white rounded-2xl shadow-xl p-8 w-full max-w-md;
+            }
+            .auth-input {
+                @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300;
+            }
+            .auth-button {
+                @apply w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center;
+            }
+            .auth-link {
+                @apply text-blue-600 hover:text-blue-800 transition-colors duration-300;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Logo和标题 -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-blue-50 rounded-full mb-4">
+                    <svg width="60" height="60" viewBox="0 0 40 40" class="transform hover:scale-110 transition-transform duration-300">
+                        <defs>
+                            <linearGradient id="loginLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#1D4ED8;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+
+                        <!-- 机器人身体 -->
+                        <rect x="8" y="12" width="24" height="20" rx="6" ry="6" fill="url(#loginLogoGradient)"/>
+
+                        <!-- 机器人头部 -->
+                        <rect x="12" y="6" width="16" height="12" rx="4" ry="4" fill="url(#loginLogoGradient)"/>
+
+                        <!-- 眼睛 -->
+                        <circle cx="16" cy="11" r="2" fill="white"/>
+                        <circle cx="24" cy="11" r="2" fill="white"/>
+                        <circle cx="16" cy="11" r="1" fill="#1D4ED8"/>
+                        <circle cx="24" cy="11" r="1" fill="#1D4ED8"/>
+
+                        <!-- 嘴巴 -->
+                        <rect x="18" y="14" width="4" height="1" rx="0.5" fill="white"/>
+
+                        <!-- 天线 -->
+                        <line x1="20" y1="6" x2="20" y2="3" stroke="url(#loginLogoGradient)" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="20" cy="3" r="1.5" fill="#F59E0B"/>
+
+                        <!-- 手臂 -->
+                        <rect x="4" y="18" width="6" height="3" rx="1.5" fill="url(#loginLogoGradient)"/>
+                        <rect x="30" y="18" width="6" height="3" rx="1.5" fill="url(#loginLogoGradient)"/>
+
+                        <!-- 装饰线条 -->
+                        <line x1="10" y1="25" x2="14" y2="25" stroke="white" stroke-width="1" stroke-linecap="round"/>
+                        <line x1="26" y1="25" x2="30" y2="25" stroke="white" stroke-width="1" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-900 mb-2">欢迎回来</h1>
+                <p class="text-gray-600">登录您的AI助手账户</p>
+            </div>
+
+            <!-- 登录表单 -->
+            <form id="login-form">
+                {% csrf_token %}
+                
+                <!-- 用户名/邮箱 -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-medium mb-2">
+                        <i class="fa fa-user mr-2"></i>用户名或邮箱
+                    </label>
+                    <input type="text" id="username" name="username" class="auth-input" placeholder="请输入用户名或邮箱" required>
+                </div>
+
+                <!-- 密码 -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-medium mb-2">
+                        <i class="fa fa-lock mr-2"></i>密码
+                    </label>
+                    <div class="relative">
+                        <input type="password" id="password" name="password" class="auth-input pr-12" placeholder="请输入密码" required>
+                        <button type="button" id="toggle-password" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 记住我 -->
+                <div class="flex items-center justify-between mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="remember-me" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-2 text-sm text-gray-600">记住我</span>
+                    </label>
+                    <a href="#" class="text-sm auth-link">忘记密码？</a>
+                </div>
+
+                <!-- 登录按钮 -->
+                <button type="submit" id="login-btn" class="auth-button">
+                    <span id="login-text">登录</span>
+                    <i id="login-loading" class="fa fa-spinner fa-spin ml-2 hidden"></i>
+                </button>
+
+                <!-- 错误提示 -->
+                <div id="error-message" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm hidden">
+                    <i class="fa fa-exclamation-circle mr-2"></i>
+                    <span id="error-text"></span>
+                </div>
+
+                <!-- 注册链接 -->
+                <div class="mt-6 text-center">
+                    <span class="text-gray-600">还没有账户？</span>
+                    <a href="/auth/register/" class="auth-link font-medium">立即注册</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('login-form');
+            const loginBtn = document.getElementById('login-btn');
+            const loginText = document.getElementById('login-text');
+            const loginLoading = document.getElementById('login-loading');
+            const errorMessage = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+            const togglePassword = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password');
+
+            // 密码显示/隐藏切换
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                const icon = this.querySelector('i');
+                icon.className = type === 'password' ? 'fa fa-eye' : 'fa fa-eye-slash';
+            });
+
+            // 表单提交
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value.trim();
+                const rememberMe = document.getElementById('remember-me').checked;
+
+                if (!username || !password) {
+                    showError('请填写完整信息');
+                    return;
+                }
+
+                // 显示加载状态
+                setLoading(true);
+                hideError();
+
+                try {
+                    const response = await fetch('/auth/api/login/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            password: password,
+                            remember_me: rememberMe
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // 登录成功，跳转到主页
+                        window.location.href = '/';
+                    } else {
+                        showError(data.message || '登录失败');
+                    }
+                } catch (error) {
+                    console.error('登录请求失败:', error);
+                    showError('网络错误，请稍后重试');
+                } finally {
+                    setLoading(false);
+                }
+            });
+
+            function setLoading(loading) {
+                loginBtn.disabled = loading;
+                if (loading) {
+                    loginText.textContent = '登录中...';
+                    loginLoading.classList.remove('hidden');
+                    loginBtn.classList.add('opacity-75', 'cursor-not-allowed');
+                } else {
+                    loginText.textContent = '登录';
+                    loginLoading.classList.add('hidden');
+                    loginBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                }
+            }
+
+            function showError(message) {
+                errorText.textContent = message;
+                errorMessage.classList.remove('hidden');
+            }
+
+            function hideError() {
+                errorMessage.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
