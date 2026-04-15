@@ -180,7 +180,7 @@ def main():
     # 【修改点 2】：使用 ChatOpenAI，它会自动从 .env 读取 API_KEY 和 BASE_URL
     # 注意：这里的 model 名称填写你的中转站支持的模型名，通常原样写 gemini-2.5-flash 即可
     llm = ChatOpenAI(
-        model="gpt-4o-all",
+        model="gpt-5.3-codex",
         temperature=0.2,
         max_retries=3,
         max_tokens=1000,
