@@ -9,7 +9,7 @@ processes = []
 def start_system():
     print("🚀 正在启动 E.C.H.O. 神经哨兵系统...")
 
-    # 🌟 核心防弹修复：获取 run.py 所在的绝对物理路径
+    # 获取 run.py 所在的绝对物理路径
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     python_exe = sys.executable
 
@@ -57,7 +57,7 @@ def start_system():
 
 
 def shutdown_system():
-    print("\n🛑 收到中断信号，正在优雅关闭所有组件...")
+    print("\n🛑 收到中断信号，正在关闭所有组件...")
     for p in processes:
         try:
             p.terminate()

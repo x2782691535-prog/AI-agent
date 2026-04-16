@@ -1,9 +1,10 @@
+# 用了BCI-IV-2a数据集，快速学习，和agentOpenAI.py配套
 import os
 import mne
 import numpy as np
 import base64
 import json
-import time  # 新增：用于倒计时
+import time
 from io import BytesIO
 from PIL import ImageGrab
 from scipy.spatial.distance import cosine

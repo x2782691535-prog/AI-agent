@@ -1,3 +1,4 @@
+# 用了BCI-IV-2a数据集，快速学习，和app.py配套
 import os
 import time
 import mne
